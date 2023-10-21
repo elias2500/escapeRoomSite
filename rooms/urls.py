@@ -4,5 +4,7 @@ from . import views
 app_name = 'rooms'
 
 urlpatterns = [
-    # path('', views.index, name='index'),
+    path('new/', views.CreateRoomView.as_view(), name='new'),
+    path('by/<username>/', views.RoomListView.as_view(), name='for_user'),
+
 ]
