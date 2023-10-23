@@ -1,10 +1,12 @@
 from django.db import models
-from users.models import user
+from django.contrib.auth import get_user_model
 
 # Create your models here.
 
+User = get_user_model()
+
 class Room(models.Model):
-    userId = models.ForeignKey(user, on_delete=models.CASCADE)
+    userId = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=50,default="A room")
     scenario = models.TextField(default="A scenario")
     puzzlePathDesign = models.CharField(max_length=50,default="A")
@@ -17,6 +19,9 @@ class Room(models.Model):
     theme = models.CharField(default="None",max_length=50)
     brief = models.TextField(default="A brief")
     debrief = models.TextField(default="A debrief")
+
+    class Meta:
+        unique_together = ['userId','title']
 
 class SubRoom(models.Model):
     roomId = models.ForeignKey(Room, on_delete=models.CASCADE)

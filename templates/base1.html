@@ -22,9 +22,9 @@
                     <a class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none w-25" href="{% url 'home' %}">EscapeRoomCentral</a>
                     <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-end mb-md-0 w-75">
                         {% if request.user.is_authenticated %}
-                            <li><a class="btn btn-primary me-2" href="{% url 'rooms:roomlist' username=user.username %}">Projects</a></li>
+                            <li><a class="btn btn-primary me-2" href="{% url 'rooms:roomlist' username=user.username %}">Projects</a></li> <!-- TODO:Create the "roomlist" -->
                             <li><a class="btn btn-outline-light me-2" href="{% url 'users:logout' %}">Logout</a></li>
-                            <li><a class="btn btn-warning" href="{% url 'rooms:create' %}">Create</a></li>
+                            <li><a class="btn btn-warning" href="{% url 'rooms:new' %}">Create</a></li>
                         {% else %}
                         <div class="text-end">
                             <a class="btn btn-outline-light me-2" href="{% url 'users:login' %}">Login</a>
