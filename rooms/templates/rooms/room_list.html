@@ -7,9 +7,7 @@
     <ul class="list-group">
         {% for room in room_list %}
             <li class="list-group-item">
-                <a href="{% url 'room_detail' room.pk %}">
-                    {{ room.name }}
-                </a>
+                {{ room.title }}
             </li>
         {% empty %}
             <li class="list-group-item">No rooms available.</li>

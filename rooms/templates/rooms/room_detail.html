@@ -1,0 +1,32 @@
+<!-- FILEPATH: /home/ilias/escapeRoomSite/rooms/templates/rooms/room_detail.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+    <div>
+        <h1>{{ room.title }}</h1>
+        <p>Scenario:</p>
+        <p>{{ room.scenario }}</p>
+        <p>Puzzle Path Design:</p>
+        <p>{{ room.puzzlePathDesign }}</p>
+        <p>Minimum Number of Players:</p>
+        <p>{{ room.minPlayers }}</p>
+        <p>Maximum Number of Players:</p>
+        <p>{{ room.maxPlayers }}</p>
+        <p>Is there an Actor?:</p>
+        <p>{{ room.hasActor }}</p>
+        <p>Goal:</p>
+        <p>{{ room.goal }}</p>
+        <p>Difficulty:</p>
+        <p>{{ room.difficulty }}</p>
+        <p>Time Limit:</p>
+        <p>{{ room.timeLimit }}</p>
+        <p>Theme:</p>
+        <p>{{ room.theme }}</p>
+        <p>Brief:</p>
+        <p>{{ room.brief }}</p>
+        <p>Debrief:</p>
+        <p>{{ room.debrief }}</p>
+    </div>
+
+{% endblock %}

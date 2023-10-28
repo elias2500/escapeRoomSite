@@ -1,3 +1,4 @@
+import datetime
 from django.db import models
 from django.contrib.auth import get_user_model
 
@@ -6,8 +7,8 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 
 class Room(models.Model):
-    userId = models.ForeignKey(User, on_delete=models.CASCADE)
-    title = models.CharField(max_length=50,default="A room")
+    userId = models.ForeignKey(User, on_delete=models.CASCADE, related_name='rooms')
+    title = models.CharField(max_length=50,default="A room", unique=True)
     scenario = models.TextField(default="A scenario")
     puzzlePathDesign = models.CharField(max_length=50,default="A")
     minPlayers = models.PositiveSmallIntegerField(default=2)
@@ -15,7 +16,8 @@ class Room(models.Model):
     hasActor = models.BooleanField(default=False)
     goal = models.CharField(max_length=50,default="A goal")
     difficulty = models.CharField(default="Easy",max_length=10)
-    timeLimit = models.TimeField(default="00:30:00")
+    #Changed timeLimit froma a TimeField to a DurationField
+    timeLimit = models.DurationField(default=datetime.timedelta(minutes=60))
     theme = models.CharField(default="None",max_length=50)
     brief = models.TextField(default="A brief")
     debrief = models.TextField(default="A debrief")
