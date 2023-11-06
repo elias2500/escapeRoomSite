@@ -3,7 +3,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <div>
+    <div class='container'>
         <h1>{{ room.title }}</h1>
         <p>Scenario:</p>
         <p>{{ room.scenario }}</p>
@@ -27,6 +27,15 @@
         <p>{{ room.brief }}</p>
         <p>Debrief:</p>
         <p>{{ room.debrief }}</p>
+    
+        <div class="media-footer">
+            {% if user.is_authenticated and room.user == userId and not hide_delete %}
+                <a href="{% url 'rooms:delete' pk=room.pk %}" title="delete" class="btn btn-danger">Delete</a>
+            {% endif %}
+            {% if user.is_authenticated and room.user == userId %}
+                <a href="{% url 'rooms:update' username=user.username pk=room.pk %}" class='btn btn-primary'>Update</a>
+            {% endif %}
+        </div>
     </div>
-
+    
 {% endblock %}

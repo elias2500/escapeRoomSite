@@ -7,10 +7,14 @@
     <ul class="list-group">
         {% for room in room_list %}
             <li class="list-group-item">
-                {{ room.title }}
+                <a href="{% url 'rooms:single' username=user.username pk=room.pk %}">{{ room.title }}</a>
             </li>
         {% empty %}
             <li class="list-group-item">No rooms available.</li>
         {% endfor %}
     </ul>
+    <div><h1></h1></div>
+    <div>
+        <a class="btn btn-warning" href="{% url 'rooms:new' %}">Create</a>
+    </div>
 {% endblock %}
