@@ -1,0 +1,12 @@
+<!-- FILEPATH: /home/ilias/escapeRoomSite/rooms/templates/rooms/subroom_form.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Create a Sub Room</h1>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Create</button>
+  </form>
+{% endblock %}

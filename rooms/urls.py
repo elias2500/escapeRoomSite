@@ -9,4 +9,6 @@ urlpatterns = [
     path('by/<username>/<pk>/', views.RoomDetailView.as_view(), name='single'),
     path('delete/<pk>/', views.DeleteRoomView.as_view(), name='delete'),
     path('update/<username>/<pk>/', views.EditRoomView.as_view(), name='update'),
+    path('newSubRoom/', views.CreateSubRoomView.as_view(), name='new_sub_room'),
+    path('subRoomBy/<pk>/of/<title>', views.SubRoomDetailView.as_view(), name='subroom_single'),
 ]
