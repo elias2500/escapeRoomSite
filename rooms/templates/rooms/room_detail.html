@@ -27,6 +27,13 @@
         <p>{{ room.brief }}</p>
         <p>Debrief:</p>
         <p>{{ room.debrief }}</p>
+        <h2>Subrooms:</h2>
+        
+        <ul>
+            {% for subroom in subrooms %}
+                <li><a href="{% url 'rooms:subroom_single' username=user.username title=room.title pk=subroom.pk %}">{{ subroom.title }}</a></li>
+            {% endfor %}
+        </ul>
     
         <div class="media-footer">
             {% if user.is_authenticated and room.user == userId and not hide_delete %}
@@ -34,6 +41,9 @@
             {% endif %}
             {% if user.is_authenticated and room.user == userId %}
                 <a href="{% url 'rooms:update' username=user.username pk=room.pk %}" class='btn btn-primary'>Update</a>
+            {% endif %}
+            {% if user.is_authenticated and room.user == userId %}
+                <a type="button" class="btn btn-info" href="{% url 'rooms:new_sub_room' pk=room.pk %}">Create Sub-Room</a>
             {% endif %}
         </div>
     </div>
