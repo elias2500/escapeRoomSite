@@ -1,7 +1,7 @@
 from typing import Any
 from django.db.models.query import QuerySet
 from django.http import Http404
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from django.urls import reverse, reverse_lazy
 from django.contrib import messages
 from django.views import generic
@@ -59,6 +59,13 @@ class RoomListView(LoginRequiredMixin, UserPassesTestMixin, generic.ListView):
 class RoomDetailView(LoginRequiredMixin, UserPassesTestMixin, generic.DetailView):
     model = models.Room
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        room = self.get_object()
+        subrooms = room.subRooms.all()
+        context["subrooms"] = subrooms
+        return context
+
     """ def get_queryset(self):
         queryset = super().get_queryset()
         return queryset.filter(
@@ -100,21 +107,39 @@ class CreateSubRoomView(LoginRequiredMixin, SelectRelatedMixin, generic.CreateVi
     def form_valid(self, form):
         #Getting the object from the form
         self.object = form.save(commit=False)
-        #Setting the user of the object to the current user
-        self.object.userId = self.request.user
+        #Setting the user of the object to the current room
+        self.object.roomId = get_object_or_404(models.Room, id=self.kwargs['pk'])
         #Saving the object to the database
         self.object.save()
         return super().form_valid(form)   
     
     def get_success_url(self):
-        return reverse('rooms:subroom_single', kwargs= {'pk': self.object.pk, 'title': self.object.roomId.title})
+        return reverse('rooms:subroom_single', kwargs= {'username': self.request.user, 'title': self.object.roomId.title, 'pk': self.object.pk})
     
-    def get_form_kwargs(self):
-        kwargs = super().get_form_kwargs()
-        kwargs['request'] = self.request
-        return kwargs
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['room'] = get_object_or_404(models.Room, id=self.kwargs['pk'])
+        return context
+    
     
 class SubRoomDetailView(LoginRequiredMixin, UserPassesTestMixin, generic.DetailView):
+    model = models.SubRoom
     
     def test_func(self):
         return self.request.user.username == self.kwargs.get('username')
+    
+class DeleteSubRoomView(LoginRequiredMixin, SelectRelatedMixin, generic.DeleteView):
+    model = models.SubRoom
+    select_related = ('roomId',)
+    #success_url = reverse_lazy('home')
+
+    def get_success_url(self):
+        return reverse('rooms:single', kwargs={'username': self.request.user, 'pk': self.object.roomId.pk})
+    
+class EditSubRoomView(LoginRequiredMixin, generic.UpdateView):
+    #fields = ('title','noOfPlayers','difficulty','hasActor','theme','scenario','riddles')
+    form_class = forms.CreateSubRoomForm
+    model = models.SubRoom
+
+    def get_success_url(self):
+        return reverse('rooms:subroom_single', kwargs= {'username': self.request.user, 'title': self.object.roomId.title, 'pk': self.object.pk})

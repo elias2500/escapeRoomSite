@@ -1,0 +1,13 @@
+<!-- FILEPATH: /home/ilias/Documents/escapeRoomSite/rooms/templates/rooms/subroom_detail.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="subroom-detail">
+        <h1>{{ subroom.title }}</h1>
+    </div>
+    {% if user.is_authenticated and room.user == userId and not hide_delete %}
+        <a href="{% url 'rooms:delete_subroom' pk=subroom.pk %}" title="delete" class="btn btn-danger">Delete</a>
+        <a href="{% url 'rooms:update_subroom' pk=subroom.pk %}" title="update" class='btn btn-primary'>Update</a>
+    {% endif %}
+{% endblock %}
