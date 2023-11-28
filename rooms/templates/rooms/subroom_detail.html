@@ -4,10 +4,19 @@
 
 {% block content %}
     <div class="subroom-detail">
-        <h1>{{ subroom.title }}</h1>
+        <h1>Sub-Room: {{ subroom.title }}</h1>
     </div>
+
+    <h3>Puzzles:</h3>
+    <ul>
+        {% for puzzle in puzzles %}
+            <li><a href="{% url 'rooms:puzzle_single' pk=puzzle.pk %}">{{ puzzle.title }}</a></li>
+        {% endfor %}
+    </ul>
+
     {% if user.is_authenticated and room.user == userId and not hide_delete %}
         <a href="{% url 'rooms:delete_subroom' pk=subroom.pk %}" title="delete" class="btn btn-danger">Delete</a>
         <a href="{% url 'rooms:update_subroom' pk=subroom.pk %}" title="update" class='btn btn-primary'>Update</a>
+        <a href="{% url 'rooms:new_puzzle' pk=subroom.pk username=user.username %}" title="create" class='btn btn-warning'>Create a Puzzle</a>
     {% endif %}
 {% endblock %}

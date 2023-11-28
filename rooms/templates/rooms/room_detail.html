@@ -4,7 +4,7 @@
 
 {% block content %}
     <div class='container'>
-        <h1>{{ room.title }}</h1>
+        <h1>Room: {{ room.title }}</h1>
         <p>Scenario:</p>
         <p>{{ room.scenario }}</p>
         <p>Puzzle Path Design:</p>
@@ -27,8 +27,8 @@
         <p>{{ room.brief }}</p>
         <p>Debrief:</p>
         <p>{{ room.debrief }}</p>
-        <h2>Subrooms:</h2>
         
+        <h3>Subrooms:</h3>
         <ul>
             {% for subroom in subrooms %}
                 <li><a href="{% url 'rooms:subroom_single' username=user.username title=room.title pk=subroom.pk %}">{{ subroom.title }}</a></li>

@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div>
+        <h1>Reward: {{ reward.pk }}</h1>
+    </div>
+    <div>
+        <p>Description: {{ reward.description }}</p>
+    </div>
+    <div>
+        {% if user.is_authenticated and room.user == userId and not hide_delete %}
+            <a href="{% url 'rooms:delete_reward' pk=object.pk %}" title="delete" class="btn btn-danger">Delete</a>
+            <a href="{% url 'rooms:update_reward' pk=object.pk %}" title="update" class='btn btn-primary'>Update</a>
+        {% endif %}
+</div>
+{% endblock %}

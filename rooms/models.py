@@ -47,18 +47,20 @@ class SubRoom(models.Model):
     title = models.CharField(max_length=50, blank=True)
 
 class Puzzle(models.Model):
-    subRoomId = models.ForeignKey(SubRoom, on_delete=models.CASCADE)
+    subRoomId = models.ForeignKey(SubRoom, on_delete=models.CASCADE, related_name='puzzles')
     title = models.CharField(max_length=50,default="A puzzle")
-    relatedPuzzle = models.ForeignKey('self', on_delete=models.CASCADE, null=True)
+    description = models.TextField(default="A description", null=True)
+    relatedPuzzle = models.ForeignKey('self', on_delete=models.CASCADE, null=True, related_name='relatedPuzzles')
 
 class Solution(models.Model):
-    puzzleId = models.ForeignKey(Puzzle, on_delete=models.CASCADE)
+    puzzleId = models.ForeignKey(Puzzle, on_delete=models.CASCADE, related_name='solutions')
     description = models.TextField(default="A description")
 
 class Reward(models.Model):
-    puzzleId = models.ForeignKey(Puzzle, on_delete=models.CASCADE)
+    puzzleId = models.ForeignKey(Puzzle, on_delete=models.CASCADE, related_name='rewards')
     description = models.TextField(default="A description")
 
 class Hint(models.Model):
-    puzzleId = models.ForeignKey(Puzzle, on_delete=models.CASCADE)
+    puzzleId = models.ForeignKey(Puzzle, on_delete=models.CASCADE, related_name='hints')
     description = models.TextField(default="A description")
+    condition = models.TextField(default="A condition")

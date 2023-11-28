@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+
+{% block content %}
+    {% if not form.instance.pk %}
+        <h1>Create a Puzzle</h1>
+    {% else %}
+        <h1>Update Puzzle</h1>
+    {% endif %}
+    {% if not form.instance.pk %}
+        <form action="{% url 'rooms:new_puzzle' pk=subroom.pk username=user.username %}" method='POST'>            {% csrf_token %}
+            {% bootstrap_form form %}
+            <input type="submit" value='Create Puzzle'>
+        </form>
+    {% else %}
+        <form action="{% url 'rooms:update_puzzle' pk=object.pk %}" method='POST'>
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            <input type="submit" value='Update Puzzle'>
+        </form>
+    {% endif %}
+{% endblock %}

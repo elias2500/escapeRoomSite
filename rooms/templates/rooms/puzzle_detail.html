@@ -1,0 +1,48 @@
+<!-- FILEPATH: /home/ilias/Documents/escapeRoomSite/rooms/templates/rooms/puzzle_detail.html -->
+{% extends 'base.html' %}
+{% block content %}
+    <div>
+        <h1>Puzzle: {{ puzzle.title }}</h1>
+    </div>
+    <div>
+        <p>Description: {{ puzzle.description }}</p>
+        {% if puzzle.relatedPuzzle.title %}
+            <p>Related Puzzle: {{ puzzle.relatedPuzzle.title }}</p>
+        {% else %}
+            <p>Related Puzzle: None</p>
+        {% endif %}
+    </div>
+    <div>
+        <h3>Solutions:</h3>
+        <ul>
+            {% for solution in solutions %}
+                <li><a href="{% url 'rooms:solution_single' pk=solution.pk %}">{{ solution.pk }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div>
+        <h3>Rewards:</h3>
+        <ul>
+            {% for reward in rewards %}
+                <li><a href="{% url 'rooms:reward_single' pk=reward.pk %}">{{ reward.pk }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div>
+        <h3>Hints:</h3>
+        <ul>
+            {% for hint in hints %}
+                <li><a href="{% url 'rooms:hint_single' pk=hint.pk %}">{{ hint.pk }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div>
+        {% if user.is_authenticated and room.user == userId and not hide_delete %}
+            <a href="{% url 'rooms:delete_puzzle' pk=object.pk %}" title="delete" class="btn btn-danger">Delete</a>
+            <a href="{% url 'rooms:update_puzzle' pk=object.pk %}" title="update" class='btn btn-primary'>Update</a>
+            <a href="{% url 'rooms:new_solution' pk=object.pk username=user.username %}" title="create" class="btn btn-warning">Create a Solution</a>
+            <a href="{% url 'rooms:new_reward' pk=object.pk username=user.username %}" title="create" class="btn btn-warning">Create a Reward</a>
+            <a href="{% url 'rooms:new_hint' pk=object.pk username=user.username %}" title="create" class="btn btn-warning">Create a Hint</a>
+        {% endif %}
+</div>
+{% endblock %}

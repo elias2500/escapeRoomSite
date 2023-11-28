@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+
+{% block content %}
+    {% if not form.instance.pk %}
+        <h1>Create a Reward</h1>
+    {% else %}
+        <h1>Update Reward</h1>
+    {% endif %}
+    {% if not form.instance.pk %}
+        <form action="{% url 'rooms:new_reward' pk=puzzle.pk username=user.username %}" method='POST'>
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            <input type="submit" value='Create Reward'>
+        </form>
+    {% else %}
+        <form action="{% url 'rooms:update_reward' pk=object.pk %}" method='POST'>
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            <input type="submit" value='Update Reward'>
+        </form>
+    {% endif %}
+{% endblock %}
