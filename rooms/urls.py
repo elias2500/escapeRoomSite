@@ -29,4 +29,5 @@ urlpatterns = [
     path('new/hint/for/<pk>/by/<username>/',views.CreateHintView.as_view(), name='new_hint'),
     path('hint/<pk>/update/',views.EditHintView.as_view(), name='update_hint'),
     path('hint/delete/<pk>/',views.DeleteHintView.as_view(), name='delete_hint'),
+    path('api/rooms/', views.RoomListAPIView.as_view(), name='room_list'),
 ]

@@ -7,9 +7,16 @@ from django.contrib import messages
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from braces.views import SelectRelatedMixin
+from rest_framework import generics
+from .permissions import OnlyOwnerCanRead
+from rooms import serializers
 from . import models
 from django.contrib.auth import get_user_model
 from . import forms
+from rest_framework import generics
+from rest_framework.permissions import IsAuthenticated
+from . import serializers, models
+
 
 User = get_user_model()
 
@@ -358,3 +365,13 @@ class DeleteHintView(LoginRequiredMixin, SelectRelatedMixin, generic.DeleteView)
 
     def get_success_url(self):
         return reverse('rooms:puzzle_single', kwargs={'pk': self.object.puzzleId.pk,})
+    
+class RoomListAPIView(generics.ListAPIView):
+    serializer_class = serializers.RoomSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        user = self.request.user
+        return models.Room.objects.filter(userId=user)
+
+    serializer_class = serializers.RoomSerializer

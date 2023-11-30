@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig', # Added by me
     'rooms.apps.RoomsConfig', # Added by me
     'django_bootstrap5', # Added by me
+    'rest_framework', # Added by me
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
