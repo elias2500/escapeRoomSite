@@ -30,4 +30,9 @@ urlpatterns = [
     path('hint/<pk>/update/',views.EditHintView.as_view(), name='update_hint'),
     path('hint/delete/<pk>/',views.DeleteHintView.as_view(), name='delete_hint'),
     path('api/rooms/', views.RoomListAPIView.as_view(), name='room_list'),
+    path('api/subRooms/', views.SubRoomListAPIView.as_view(), name='subroom_list'),
+    path('api/puzzles/', views.PuzzleListAPIView.as_view(), name='puzzle_list'),
+    path('api/solutions/', views.SolutionsListAPIView.as_view(), name='solution_list'),
+    path('api/rewards/', views.RewardsListAPIView.as_view(), name='reward_list'),
+    path('api/hints/', views.HintsListAPIView.as_view(), name='hint_list'),
 ]

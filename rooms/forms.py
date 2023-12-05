@@ -15,17 +15,6 @@ class CreateSubRoomForm(forms.ModelForm):
         fields = ('title',)
         model = models.SubRoom
 
-    """ roomId = forms.ModelChoiceField(queryset=None,
-                                      empty_label=None,
-                                      widget=forms.Select(attrs={'class': 'form-control'}),
-                                      label='Room') """
-
-    """ def __init__(self, request, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['roomId'].queryset = request.user.rooms.all()
-        self.fields['roomId'].label_from_instance = lambda obj: obj.title """
-    
-
 class CreatePuzzleForm(forms.ModelForm):
     class Meta:
         fields = ('title', 'description', 'relatedPuzzle')

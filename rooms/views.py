@@ -372,6 +372,41 @@ class RoomListAPIView(generics.ListAPIView):
 
     def get_queryset(self):
         user = self.request.user
-        return models.Room.objects.filter(userId=user)
+        return models.Room.objects.filter(userId=user).prefetch_related('subRooms')
 
     serializer_class = serializers.RoomSerializer
+
+class SubRoomListAPIView(generics.ListAPIView):
+    serializer_class = serializers.SubRoomSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return models.SubRoom.objects.all()
+    
+class PuzzleListAPIView(generics.ListAPIView):
+    serializer_class = serializers.PuzzleSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return models.Puzzle.objects.all()
+    
+class SolutionsListAPIView(generics.ListAPIView):
+    serializer_class = serializers.SolutionSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return models.Solution.objects.all()
+    
+class RewardsListAPIView(generics.ListAPIView):
+    serializer_class = serializers.RewardSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return models.Reward.objects.all()
+    
+class HintsListAPIView(generics.ListAPIView):
+    serializer_class = serializers.HintSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return models.Hint.objects.all()
